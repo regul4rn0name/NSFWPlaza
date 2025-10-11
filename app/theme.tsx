@@ -17,14 +17,14 @@ export default function Theme(props: any) {
           </div>
         )}
         <Image
-          src={`http://localhost:3001/themes/previews/${encodeURIComponent(theme.url)}.png`}
+          src={`https://nsfwplaza.jajca.site/api/themes/previews/${encodeURIComponent(theme.url)}.png`}
           alt={theme.filename}
           fill={true}
           className="object-contain relative z-0"
         />
         
       </div>
-      <a href={`http://localhost:3001/themes/download/${theme.filename}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl hover:border-4 hover:border-black duration-25">Download</button></a>
+      <a href={`https://nsfwplaza.jajca.site/api/themes/download/${theme.filename}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl hover:border-4 hover:border-black duration-25">Download</button></a>
     </div>
 
 
