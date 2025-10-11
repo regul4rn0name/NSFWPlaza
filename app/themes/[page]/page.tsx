@@ -17,9 +17,9 @@ export default async function Page({ params }:any) {
             ))}
             <div className="flex m-auto justify-around items-center col-span-4 gap-5">
                 {pageNumber > 1 && (
-                    <Link className="inline-block px-4 py-2 bg-[#0d1b2a] text-white rounded-xl hover:border-4 hover:border-white duration-25" href={`http://localhost:3000/themes/${pageNumber - 1}`}>Prev</Link>
+                    <Link className="inline-block px-4 py-2 bg-[#0d1b2a] text-white rounded-xl hover:border-4 hover:border-white duration-25" href={`https://nsfwplaza.jajca.site/themes/${pageNumber - 1}`}>Prev</Link>
                 )}
-                <Link className="inline-block px-4 py-2 bg-[#0d1b2a] text-white rounded-xl hover:border-4 hover:border-white duration-25" href={`http://localhost:3000/themes/${pageNumber + 1}`}>Next</Link>
+                <Link className="inline-block px-4 py-2 bg-[#0d1b2a] text-white rounded-xl hover:border-4 hover:border-white duration-25" href={`https://nsfwplaza.jajca.site/themes/${pageNumber + 1}`}>Next</Link>
             </div>
         </div>
     )
