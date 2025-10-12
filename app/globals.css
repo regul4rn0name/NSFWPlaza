@@ -12,3 +12,9 @@
     transition: 0.25s;
   }
 }
+
+html, body, #__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
