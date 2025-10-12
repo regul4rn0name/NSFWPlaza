@@ -13,7 +13,7 @@ export default function Theme(props: any) {
       <div className="w-80 h-96 relative  m-5 " onMouseEnter={()=>setHover(true)} onMouseLeave={()=>setHover(false)}>
         {hover && (
           <div className="absolute inset-0 flex justify-around items-center bg-black/50 z-20">
-            <QRCodeSVG value={`http://192.168.1.23:3001/themes/download/${encodeURIComponent(theme.filename)}`} size={256} bgColor="#FFFFFF" fgColor="#000000" marginSize={5}/>
+            <QRCodeSVG value={`https://nsfwplaza.jajca.site/api/themes/download/${encodeURIComponent(theme.filename)}`} size={256} bgColor="#FFFFFF" fgColor="#000000" marginSize={5}/>
           </div>
         )}
         <Image
@@ -24,7 +24,7 @@ export default function Theme(props: any) {
         />
         
       </div>
-      <a href={`https://nsfwplaza.jajca.site/api/themes/download/${theme.filename}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl hover:border-4 hover:border-black duration-25">Download</button></a>
+      <a href={`https://nsfwplaza.jajca.site/api/themes/download/${encodeURIComponent(theme.filename)}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl hover:border-4 hover:border-black duration-25">Download</button></a>
     </div>
 
 
