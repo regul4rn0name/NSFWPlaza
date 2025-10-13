@@ -8,7 +8,7 @@ import Link from "next/link";
 export default async function Page({ params }:any) {
     const {page} = await params;
     const pageNumber = Number(page);
-    const data = await fetch(`https://nsfwplaza.jajca.site/api//badges/${pageNumber}`);
+    const data = await fetch(`https://nsfwplaza.jajca.site/api/badges/${pageNumber}`);
     const images = await data.json();
 
     return (
