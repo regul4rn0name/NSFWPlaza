@@ -9,6 +9,8 @@ export default async function Page({ params }:any) {
     const {page} = await params;
     const pageNumber = Number(page);
     const data = await fetch(`https://nsfwplaza.jajca.site/api/badges/${pageNumber}`);
+    const length = (await fetch(`https://nsfwplaza.jajca.site/api/themes/length`));
+    const pages = await length.json();
     const images = await data.json();
 
     return (
@@ -24,6 +26,9 @@ export default async function Page({ params }:any) {
                     )}
                     <Link className="inline-block px-4 py-2 bg-[#0d1b2a] text-white rounded-xl hover:border-4 hover:border-white duration-25" href={`${pageNumber + 1}`}>Next</Link>
                 </div>
+                {/*pages && (
+                        <h1 className="text-white text-center col-span-4">{pageNumber} of {pages.pages}</h1>
+                    )*/}
             </div>
         </>
     )

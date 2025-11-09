@@ -25,7 +25,7 @@ export default function Theme(props: any) {
 
 
       </div>
-      <a href={`https://nsfwplaza.jajca.site/api/${type}/download/${encodeURIComponent(data.filename)}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl hover:border-4 hover:border-black duration-25">Download</button></a>
+      <a href={`https://nsfwplaza.jajca.site/api/${type}/download/${encodeURIComponent(data.filename)}`}><button className="bg-[#e0e1dd] w-32 h-16 rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25">Download</button></a>
     </div>
 
 

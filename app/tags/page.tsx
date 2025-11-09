@@ -27,7 +27,7 @@ export default function TaggingPage() {
       setCurrentIndex(0);
       setSelectedTags([]);
       try {
-        const res = await fetch(`http://localhost:4000/${collection}/empty-tags`);
+        const res = await fetch(`https://nsfwplaza.jajca.site/api/${collection}/empty-tags`);
         const data: Item[] = await res.json();
         setItems(data);
       } catch (err) {
@@ -62,7 +62,7 @@ export default function TaggingPage() {
     if (!currentItem) return;
 
     try {
-      await fetch(`http://localhost:4000/${collection}/${currentItem._id}/tags`, {
+      await fetch(`https://nsfwplaza.jajca.site/api/${collection}/${currentItem._id}/tags`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tags: selectedTags }),

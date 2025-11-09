@@ -1,11 +1,13 @@
 'use client'
 
+import Link from "next/link";
 import { useRef, useState } from "react"
 
 export default function Page() {
     const [tags, setTags] = useState<string[]>([]);
     const [name, setName] = useState<string>("");
     const [file, setFile] = useState<File>();
+    const [collection,setCollection] = useState<string>("themes");
     const tagref = useRef(null);
     const addtag = () => {
 
@@ -38,7 +40,7 @@ export default function Page() {
         formData.append("name", name);
 
         try {
-            const res = await fetch("http://localhost:4000/add/themes", { method: "POST", body: formData });
+            const res = await fetch(`https://nsfwplaza.jajca.site/api/add/${collection}`, { method: "POST", body: formData });
             if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
             const data = await res.json();
             console.log("Uploaded successfully:", data);
@@ -50,8 +52,14 @@ export default function Page() {
         }
     }
     return (
-        <div className="w-screen overflow-auto flex justify-center items-center h-screen bg-gradient-to-bl from-[#0d1b2a] to-[#415a77]">
-            <div className="bg-[#778da9] w-[500px] h-[300px] rounded-3xl text-white p-5 grid grid-rows-3 gap-2">
+        <div className="w-screen overflow-auto flex flex-col justify-center items-center h-screen bg-gradient-to-bl from-[#0d1b2a] to-[#415a77]">
+            <Link href={"/themes/1"} className="text-white m-5 hover:font-bold transition-all">Main Menu</Link>
+            <div className="bg-[#0d1b2a] text-white w-[500px] rounded-t-2xl flex justify-center items-center gap-2">
+                <button className={`hover:font-bold transition-all ${collection==="themes" ? 'font-bold':''}`} onClick={()=>{setCollection("themes")}}>Theme</button>
+                <button className={`hover:font-bold transition-all ${collection==="badges" ? 'font-bold':''}`} onClick={()=>{setCollection("badges")}}>Badge</button>
+                <button className={`hover:font-bold transition-all ${collection==="splashes" ? 'font-bold':''}`} onClick={()=>{setCollection("splashes")}}>Splash</button>
+            </div>
+            <div className="bg-[#778da9] w-[500px] h-[300px] rounded-b-3xl text-white p-5 grid grid-rows-3 gap-2">
                 <div className="grid grid-cols-2 gap-2">
                     <input type="text" placeholder="Name" className="bg-[#0d1b2a] rounded-md col-span-2 pl-2" onChange={(e) => setName(e.target.value)} />
                     <input type="text" placeholder="Tags" className="bg-[#0d1b2a] rounded-md pl-2" ref={tagref} />
@@ -63,7 +71,6 @@ export default function Page() {
                         ))}
                     </div>
                 </div>
-                <br></br>
                 <div className="grid grid-rows-2">
                     <h1>Select Theme</h1>
                     <input type="file" accept=".zip" className="bg-[#0d1b2a] w-56 rounded-xl p-2" onChange={handlefilechange} />

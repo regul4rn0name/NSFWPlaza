@@ -7,6 +7,7 @@ export default function Header(props:any){
             <Link className={`transition-all ${page=='themes' ? 'underline decoration-2 pointer-events-none':'hover:font-bold '}`} href={'/themes/1'}>Themes</Link>
             <Link className={`transition-all ${page=='splashes' ? 'underline decoration-2 pointer-events-none':'hover:font-bold '}`} href={'/splashes/1'}>Splashes</Link>
             <Link className={`transition-all ${page=='badges' ? 'underline decoration-2 pointer-events-none':'hover:font-bold '}`} href={'/badges/1'}>Badges</Link>
+            <Link className="absolute right-3 transition-all hover:font-bold" href={'/add'}>Add your theme/badge/splash</Link>
         </div>
     );
 }
