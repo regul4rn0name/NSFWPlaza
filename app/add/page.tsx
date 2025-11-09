@@ -8,7 +8,7 @@ export default function Page() {
     const [name, setName] = useState<string>("");
     const [file, setFile] = useState<File>();
     const [collection,setCollection] = useState<string>("themes");
-    const tagref = useRef(null);
+    const tagref = useRef<HTMLInputElement>(null);
     const addtag = () => {
 
         if (tagref.current != null) {
