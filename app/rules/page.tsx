@@ -8,7 +8,7 @@ export default function Rules() {
                 <h1 className="text-2xl font-bold mb-4">Rules</h1>
                 <ol className="list-decimal list-inside space-y-2">
                     <li>No real people except celebrities</li>
-                    <li>No children, loli, shots, etc.</li>
+                    <li>No children, loli, shota, etc.</li>
                     <li>Don't be stupid</li>
                 </ol>
             </div>
