@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useRef, useState } from "react"
+import Rules from "../rules/page";
 
 export default function Page() {
+    const [rules,setRules] = useState<boolean>(false);
     const [tags, setTags] = useState<string[]>([]);
     const [name, setName] = useState<string>("");
     const [file, setFile] = useState<File>();
@@ -52,8 +54,11 @@ export default function Page() {
         }
     }
     return (
+        
         <div className="w-screen overflow-auto flex flex-col justify-center items-center h-screen bg-gradient-to-bl from-[#0d1b2a] to-[#415a77]">
+            {rules==true && (<><Rules/> <button onClick={()=>setRules(false)} className="text-white hover:font-bold transition-all z-50">Close</button></>)}
             <Link href={"/themes/1"} className="text-white m-5 hover:font-bold transition-all">Main Menu</Link>
+            <button onClick={()=>setRules(true)} className="text-white m-5 hover:font-bold transition-all">RULES</button>
             <div className="bg-[#0d1b2a] text-white w-[500px] rounded-t-2xl flex justify-center items-center gap-2">
                 <button className={`hover:font-bold transition-all ${collection==="themes" ? 'font-bold':''}`} onClick={()=>{setCollection("themes")}}>Theme</button>
                 <button className={`hover:font-bold transition-all ${collection==="badges" ? 'font-bold':''}`} onClick={()=>{setCollection("badges")}}>Badge</button>
