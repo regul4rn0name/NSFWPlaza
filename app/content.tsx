@@ -45,7 +45,7 @@ export default function Content(props:any) {
     const params = new URLSearchParams();
     if(search) params.set('search',search);
     if(sort) params.set('sort',sort);
-    const apiUrl = `http://localhost:4000/${collection}/${page}?${params.toString()}`;
+    const apiUrl = `https://nsfwplaza.jajca.site/api/${collection}/${page}?${params.toString()}`;
 
     const {data,isLoading} = useSWR(apiUrl,fetcher);
 
