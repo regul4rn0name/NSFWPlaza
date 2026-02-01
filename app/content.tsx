@@ -14,21 +14,12 @@ interface Theme{
     url:string
 }
 
-const fetcher = async ([url, search]:[string,string | null ]) => {
-  if (search) {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ search }),
-    })
-    return res.json()
-  }
+const fetcher = (url:string)=>fetch(url).then(res=>{
+    if(!res.ok) throw new Error('Fetch Failed');
+    return res.json();
+});
 
-  const res = await fetch(url)
-  return res.json()
-}
 
-//`https://nsfwplaza.jajca.site/api/${collection}/length`
 
 export default function Content(props:any) {
     const {page,collection,initialSearch} = props;
@@ -37,20 +28,27 @@ export default function Content(props:any) {
     const [images,setImages] = useState<Theme[]>([]);
     const [search,setSearch] = useState<string>(initialSearch);
     const [input,setInput] = useState<string>(initialSearch);
+    const sortOptions = ['name','date'];
+    const [sort,setSort] = useState<string>(sortOptions[0]);
 
     useEffect(()=>{
         const id = setTimeout(()=>{
             const params = new URLSearchParams();
             if(input) params.set('search',input);
+            if(sort) params.set('sort',sort);
             router.replace(`/${collection}/${pageNumber}?${params.toString()}`);
             setSearch(input.trim())
         },1000)
 
         return ()=> clearTimeout(id)
-    },[input])
-    const {data,isLoading} = useSWR(
-        search ? [`http://localhost:4000/themes/search/${page}`, search] : [`https://nsfwplaza.jajca.site/api/${collection}/${pageNumber}`,null], fetcher
-    )
+    },[input,sort])
+    const params = new URLSearchParams();
+    if(search) params.set('search',search);
+    if(sort) params.set('sort',sort);
+    const apiUrl = `http://localhost:4000/${collection}/${page}?${params.toString()}`;
+
+    const {data,isLoading} = useSWR(apiUrl,fetcher);
+
     useEffect(()=>{
        if(data) setImages(data);
     },[data])
@@ -59,7 +57,12 @@ export default function Content(props:any) {
         <>
             <Header page={collection}/>
             <div className="min:w-screen h-8 bg-[#0d1b2a] text-white">
-                <input placeholder="Search" value={input} className="w-full h-full" onChange={e => setInput(e.target.value)}></input>
+                <input placeholder="Search" value={input} className="w-[80%] h-full" onChange={e => setInput(e.target.value)}></input>
+                <select onChange={(e)=>setSort(e.target.value)} value={sort} className="w-[19%] border-l-2 border-white">
+                    {sortOptions.map((option,id)=>(
+                        <option key={id}>{option}</option>
+                    ))}
+                </select>
             </div>
             <div className="min:w-screen min:h-screen h-fit flex flex-col justify-center items-center lg:grid lg:grid-cols-4 gap-4 bg-gradient-to-bl from-[#0d1b2a] to-[#415a77] p-5">
                 {images.map((img: any) => (
