@@ -16,7 +16,7 @@ export default function Announcement() {
     return (
         <>
             {!hidden && (
-                <div className="z-50 md:w-lg w-80 h-80 bg-gradient-to-bl text-white from-[#0d1b2a] to-[#415a77] absolute top-[25%] left-1/2 -translate-x-1/2 rounded-2xl md:p-10 p-5 m-auto">
+                <div className="z-50 md:w-lg w-80 h-80 bg-gradient-to-bl text-white from-[#0d1b2a] to-[#415a77] fixed top-[25%] left-1/2 -translate-x-1/2 rounded-2xl md:p-10 p-5 m-auto">
                     <h1>Support me!</h1>
                     <h2>Hosting website costs money,right now I pay for it myself if you would like to help me you can do it here</h2>
                     <div className="w-full grid grid-cols-7 md:gap-7 gap-1 mt-5">
