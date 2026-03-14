@@ -28,7 +28,7 @@ export default function Content(props:any) {
     const [images,setImages] = useState<Theme[]>([]);
     const [search,setSearch] = useState<string>(initialSearch);
     const [input,setInput] = useState<string>(initialSearch);
-    const sortOptions = ['name','date'];
+    const sortOptions = ['default','name','date'];
     const [sort,setSort] = useState<string>(sortOptions[0]);
 
     useEffect(()=>{
