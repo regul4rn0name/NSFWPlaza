@@ -7,66 +7,120 @@ import Link from "next/link";
 import useSWR from "swr";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import Announcement from "./announcement";
 
-interface Theme{
-    _id:string,
-    filename:string,
-    url:string
+interface Theme {
+    _id: string,
+    filename: string,
+    url: string
 }
 
-const fetcher = (url:string)=>fetch(url).then(res=>{
-    if(!res.ok) throw new Error('Fetch Failed');
+const fetcher = (url: string) => fetch(url).then(res => {
+    if (!res.ok) throw new Error('Fetch Failed');
     return res.json();
 });
 
 
 
-export default function Content(props:any) {
-    const {page,collection,initialSearch} = props;
+export default function Content(props: any) {
+    const { page, collection, initialSearch } = props;
     const router = useRouter();
     const pageNumber = Number(page);
-    const [images,setImages] = useState<Theme[]>([]);
-    const [search,setSearch] = useState<string>(initialSearch);
-    const [input,setInput] = useState<string>(initialSearch);
-    const sortOptions = ['default','name','date'];
-    const [sort,setSort] = useState<string>(sortOptions[0]);
+    const [images, setImages] = useState<Theme[]>([]);
+    const [search, setSearch] = useState<string>(initialSearch);
+    const [input, setInput] = useState<string>(initialSearch);
+    const sortOptions = ['default', 'name A-Z', 'name Z-A', 'date ASC', 'date DESC'];
+    const [sort, setSort] = useState<string>(sortOptions[0]);
 
-    useEffect(()=>{
-        const id = setTimeout(()=>{
+    useEffect(() => {
+        const id = setTimeout(() => {
             const params = new URLSearchParams();
-            if(input) params.set('search',input);
-            if(sort) params.set('sort',sort);
+            if (input) params.set('search', input);
+            if (sort) {
+                switch (sort) {
+                    case 'name A-Z':
+                        params.set('sort', 'name');
+                        params.set('order', 'asc');
+                        break;
+
+                    case 'name Z-A':
+                        params.set('sort', 'name')
+                        params.set('order', 'desc')
+                        break;
+
+                    case 'date ASC':
+                        params.set('sort', 'name')
+                        params.set('order', 'asc')
+                        break;
+
+                    case 'date DESC':
+                        params.set('sort', 'name')
+                        params.set('order', 'desc')
+                        break;
+
+                    default:
+                        params.set('sort', sort);
+                        break;
+                }
+            };
             router.replace(`/${collection}/${pageNumber}?${params.toString()}`);
             setSearch(input.trim())
-        },1000)
+        }, 1000)
 
-        return ()=> clearTimeout(id)
-    },[input,sort])
+        return () => clearTimeout(id)
+    }, [input, sort])
     const params = new URLSearchParams();
-    if(search) params.set('search',search);
-    if(sort) params.set('sort',sort);
+    if (search) params.set('search', search);
+    if (sort) {
+                switch (sort) {
+                    case 'name A-Z':
+                        params.set('sort', 'name');
+                        params.set('order', 'asc');
+                        break;
+
+                    case 'name Z-A':
+                        params.set('sort', 'name')
+                        params.set('order', 'desc')
+                        break;
+
+                    case 'date ASC':
+                        params.set('sort', 'name')
+                        params.set('order', 'asc')
+                        break;
+
+                    case 'date DESC':
+                        params.set('sort', 'name')
+                        params.set('order', 'desc')
+                        break;
+
+                    default:
+                        params.set('sort', sort);
+                        break;
+                }
+            };
     const apiUrl = `https://nsfwplaza.jajca.site/api/${collection}/${page}?${params.toString()}`;
 
-    const {data,isLoading} = useSWR(apiUrl,fetcher);
+    const { data, isLoading } = useSWR(apiUrl, fetcher);
 
-    useEffect(()=>{
-       if(data) setImages(data);
-    },[data])
+    useEffect(() => {
+        if (data) setImages(data);
+    }, [data])
 
     return (
         <>
-            <Header page={collection}/>
+            <Announcement />
+            <Header page={collection} />
             <div className="min:w-screen h-8 bg-[#0d1b2a] text-white">
                 <input placeholder="Search" value={input} className="w-[80%] h-full" onChange={e => setInput(e.target.value)}></input>
-                <select onChange={(e)=>setSort(e.target.value)} value={sort} className="w-[19%] border-l-2 border-white">
-                    {sortOptions.map((option,id)=>(
+                <select onChange={(e) => setSort(e.target.value)} value={sort} className="w-[19%] border-l-2 border-white">
+                    {sortOptions.map((option, id) => (
                         <option key={id}>{option}</option>
                     ))}
                 </select>
             </div>
             <div className="min:w-screen min:h-screen h-fit flex flex-col justify-center items-center lg:grid lg:grid-cols-4 gap-4 bg-gradient-to-bl from-[#0d1b2a] to-[#415a77] p-5">
                 {images.map((img: any) => (
-                    <Theme data={img} type={collection} key={img._id}/>
+                    <Theme data={img} type={collection} key={img._id} />
                 ))}
                 <div className="flex m-auto justify-around items-center col-span-4 gap-5">
                     {pageNumber > 1 && (

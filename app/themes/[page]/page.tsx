@@ -7,7 +7,6 @@ export default async function Page({ params,searchParams }:any){
     return(
         <>
         <Content page={page} collection={'themes'} initialSearch={search || ''}/>
-        <Announcement/>
         </>
     );
 }
