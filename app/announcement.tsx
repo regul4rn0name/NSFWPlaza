@@ -5,14 +5,17 @@ import { useEffect, useState } from "react"
 
 export default function Announcement() {
     const [hidden, setHidden] = useState<boolean>(false);
+    const [ready,setReady] = useState<boolean>(false);
     useEffect(()=>{
         const hide = localStorage.getItem('hideComponent');
         if(hide === 'true') setHidden(true);
+        setReady(true);
     },[])
     const dontshow = () => {
         localStorage.setItem('hideComponent','true')
         setHidden(true);
     }
+    if(!ready) return null
     return (
         <>
             {!hidden && (
