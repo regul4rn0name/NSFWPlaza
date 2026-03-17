@@ -42,7 +42,7 @@ export default function Page() {
         formData.append("name", name);
 
         try {
-            const res = await fetch(`https://nsfwplaza.jajca.site/api/add/${collection}`, { method: "POST", body: formData });
+            const res = await fetch(`http://localhost:4000/add/${collection}`, { method: "POST", body: formData });
             if (!res.ok) throw new Error(`Server responded with status ${res.status}`);
             const data = await res.json();
             console.log("Uploaded successfully:", data);
