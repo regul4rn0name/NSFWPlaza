@@ -49,12 +49,12 @@ export default function Content(props: any) {
                         break;
 
                     case 'date ASC':
-                        params.set('sort', 'name')
+                        params.set('sort', 'date')
                         params.set('order', 'asc')
                         break;
 
                     case 'date DESC':
-                        params.set('sort', 'name')
+                        params.set('sort', 'date')
                         params.set('order', 'desc')
                         break;
 
@@ -84,12 +84,12 @@ export default function Content(props: any) {
                         break;
 
                     case 'date ASC':
-                        params.set('sort', 'name')
+                        params.set('sort', 'date')
                         params.set('order', 'asc')
                         break;
 
                     case 'date DESC':
-                        params.set('sort', 'name')
+                        params.set('sort', 'date')
                         params.set('order', 'desc')
                         break;
 
