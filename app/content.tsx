@@ -98,7 +98,7 @@ export default function Content(props: any) {
                         break;
                 }
             };
-    const apiUrl = `http://localhost:4000/${collection}/${page}?${params.toString()}`;
+    const apiUrl = `https://nsfwplaza.jajca.site/api/${collection}/${page}?${params.toString()}`;
 
     const { data, isLoading } = useSWR(apiUrl, fetcher);
 
