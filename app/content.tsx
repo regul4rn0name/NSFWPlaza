@@ -29,7 +29,7 @@ export default function Content(props: any) {
     const [images, setImages] = useState<Theme[]>([]);
     const [search, setSearch] = useState<string>(initialSearch);
     const [input, setInput] = useState<string>(initialSearch);
-    const sortOptions = ['default', 'name A-Z', 'name Z-A', 'date ASC', 'date DESC'];
+    const sortOptions = ['default', 'name A-Z', 'name Z-A', 'date ASC', 'date DESC','downloads ASC','downloads DESC'];
     const [sort, setSort] = useState<string>(sortOptions[0]);
 
     useEffect(() => {
@@ -56,8 +56,15 @@ export default function Content(props: any) {
                     case 'date DESC':
                         params.set('sort', 'date')
                         params.set('order', 'desc')
+                        break; 
+                    case 'downloads ASC':
+                        params.set('sort','downloads')
+                        params.set('order','asc')
                         break;
-
+                    case 'downloads DESC':
+                        params.set('sort','downloads')
+                        params.set('order','desc')
+                        break;
                     default:
                         params.set('sort', sort);
                         break;
@@ -92,7 +99,14 @@ export default function Content(props: any) {
                         params.set('sort', 'date')
                         params.set('order', 'desc')
                         break;
-
+                    case 'downloads ASC':
+                        params.set('sort','downloads')
+                        params.set('order','asc')
+                        break;
+                    case 'downloads DESC':
+                        params.set('sort','downloads')
+                        params.set('order','desc')
+                        break;
                     default:
                         params.set('sort', sort);
                         break;
