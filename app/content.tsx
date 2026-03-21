@@ -126,7 +126,7 @@ export default function Content(props: any) {
             <Header page={collection} />
             <div className="min:w-screen h-8 bg-[#0d1b2a] text-white">
                 <input placeholder="Search" value={input} className="w-[80%] h-full" onChange={e => setInput(e.target.value)}></input>
-                <select onChange={(e) => setSort(e.target.value)} value={sort} className="w-[19%] border-l-2 border-white">
+                <select onChange={(e) => setSort(e.target.value)} value={sort} className="w-[19%] border-l-2 border-white bg-black text-white">
                     {sortOptions.map((option, id) => (
                         <option key={id}>{option}</option>
                     ))}
