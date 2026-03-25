@@ -3,13 +3,13 @@
 import Link from "next/link";
 import { useRef, useState } from "react"
 import Rules from "../rules/page";
+import JSZip from "jszip";
 
 export default function Page() {
     const [rules, setRules] = useState<boolean>(false);
     const [tags, setTags] = useState<string[]>([]);
     const [name, setName] = useState<string>("");
     const [file, setFile] = useState<File>();
-    const [collection, setCollection] = useState<string>("themes");
     const tagref = useRef<HTMLInputElement>(null);
     const addtag = () => {
 
@@ -23,20 +23,41 @@ export default function Page() {
         }
 
     }
-    const handlefilechange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const detectCollection = async (file:File,):string=>{
+        let detectedCollection:string = "badges";
+        try {
+            if(!file) throw(undefined)
+            const arrayBuffer = await file.arrayBuffer();
+            const zip = await JSZip.loadAsync(arrayBuffer);
+            const files = Object.keys(zip.files);
+            if (files.some(f => f.endsWith("body_LZ.bin"))) {
+                detectedCollection = "themes";
+            } else if (files.some(f => f.endsWith("splash.bin"))) {
+                detectedCollection = "splashes"
+            } else {
+                detectedCollection = "badges"
+            }
+            console.log(detectedCollection);
+        }
+        catch (error) {
+            console.log(error);
+        }
+        return detectedCollection;
+    }
+    const handlefilechange = async (e: React.ChangeEvent<HTMLInputElement>) => {
         const files = e.target.files;
         if (!files || files.length === 0) {
             setFile(undefined);
             return;
         }
         setFile(files[0]);
+
     };
 
     const publish = async () => {
         if (!file) return alert("Select ZIP file first");
-
         const formData = new FormData();
-
+        const collection = await detectCollection(file);
         formData.append("zip", file);
         formData.append("tags", JSON.stringify(tags));
         formData.append("name", name);
@@ -59,17 +80,12 @@ export default function Page() {
             {rules == true && (<><Rules /> <button onClick={() => setRules(false)} className="text-white hover:font-bold transition-all bg-black w-16 h-16 m-2 rounded-xl z-50">Close</button></>)}
             <Link href={"/themes/1"} className="text-white m-5 hover:font-bold transition-all">Main Menu</Link>
             <button onClick={() => setRules(true)} className="text-white m-5 hover:font-bold transition-all">RULES</button>
-            <div className="bg-[#0d1b2a] text-white w-[300px] md:w-[500px] rounded-t-2xl flex justify-center items-center gap-2">
-                <button className={`hover:font-bold transition-all ${collection === "themes" ? 'font-bold' : ''}`} onClick={() => { setCollection("themes") }}>Theme</button>
-                <button className={`hover:font-bold transition-all ${collection === "badges" ? 'font-bold' : ''}`} onClick={() => { setCollection("badges") }}>Badge</button>
-                <button className={`hover:font-bold transition-all ${collection === "splashes" ? 'font-bold' : ''}`} onClick={() => { setCollection("splashes") }}>Splash</button>
-            </div>
-            <div className="bg-[#778da9] w-[300px] md:w-[500px] rounded-b-3xl text-white p-5 flex flex-col gap-2">
+            <div className="bg-[#778da9] w-[300px] md:w-[500px] rounded-3xl text-white p-5 flex flex-col gap-2">
                 <div className=" flex flex-col gap-2">
                     <input type="text" placeholder="Name" className="bg-[#0d1b2a] rounded-md col-span-2 pl-2" onChange={(e) => setName(e.target.value)} />
                     <div className="flex gap-2 h-12">
-                    <input type="text" placeholder="Tags" className="bg-[#0d1b2a] rounded-md pl-2" ref={tagref} />
-                    <button className="bg-[#0d1b2a] self-end mr-5 h-full rounded-xl duration-25 border-2 border-[#0d1b2a] hover:border-white" onClick={addtag}>Add Tag</button>
+                        <input type="text" placeholder="Tags" className="bg-[#0d1b2a] rounded-md pl-2" ref={tagref} />
+                        <button className="bg-[#0d1b2a] self-end mr-5 h-full rounded-xl duration-25 border-2 border-[#0d1b2a] hover:border-white" onClick={addtag}>Add Tag</button>
                     </div>
                     <div>
                         <h1 className="mb-1">Tags</h1>
