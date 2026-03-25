@@ -23,7 +23,7 @@ export default function Page() {
         }
 
     }
-    const detectCollection = async (file:File,):string=>{
+    const detectCollection = async (file:File,):Promise<string>=>{
         let detectedCollection:string = "badges";
         try {
             if(!file) throw(undefined)
