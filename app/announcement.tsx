@@ -25,7 +25,7 @@ export default function Announcement() {
                     <div className="w-full grid grid-cols-7 md:gap-7 gap-1 mt-5">
                         <button className="bg-[#e0e1dd] col-span-2 w-full h-16 text-[13px] rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25 text-black" onClick={dontshow}>Don't show again</button>
                         <button className="bg-[#e0e1dd] col-span-2 w-full h-16 text-[13px] rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25 text-black" onClick={()=>setHidden(true)}>Close</button>
-                        <Link className="w-full col-span-3 text-[13px]"  href={'https://buymeacoffee.com/eblo'}><button className="bg-[#232c8f] w-full h-16 rounded-2xl border-4 col-span-2 border-[#232c8f] hover:border-black duration-25" onClick={dontshow}>Support me!</button></Link>
+                        <Link className="w-full col-span-3 text-[13px]"  href={'https://ko-fi.com/nplaza'}><button className="bg-[#232c8f] w-full h-16 rounded-2xl border-4 col-span-2 border-[#232c8f] hover:border-black duration-25" onClick={dontshow}>Support me!</button></Link>
                     </div>
                 </div>
             )}
