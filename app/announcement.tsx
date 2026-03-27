@@ -8,12 +8,17 @@ export default function Announcement() {
     const [ready,setReady] = useState<boolean>(false);
     useEffect(()=>{
         const hide = localStorage.getItem('hideComponent');
-        if(hide === 'true') setHidden(true);
+        const sessionHide = sessionStorage.getItem('hideComponent')
+        if(hide === 'true'||sessionHide === 'true') setHidden(true);
         setReady(true);
     },[])
     const dontshow = () => {
         localStorage.setItem('hideComponent','true')
         setHidden(true);
+    }
+    const close = ()=>{
+        sessionStorage.setItem('hideComponent','true')
+        setHidden(true)
     }
     if(!ready) return null
     return (
@@ -24,7 +29,7 @@ export default function Announcement() {
                     <h2>Hosting website costs money,right now I pay for it myself if you would like to help me you can do it here</h2>
                     <div className="w-full grid grid-cols-7 md:gap-7 gap-1 mt-5">
                         <button className="bg-[#e0e1dd] col-span-2 w-full h-16 text-[13px] rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25 text-black" onClick={dontshow}>Don't show again</button>
-                        <button className="bg-[#e0e1dd] col-span-2 w-full h-16 text-[13px] rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25 text-black" onClick={()=>setHidden(true)}>Close</button>
+                        <button className="bg-[#e0e1dd] col-span-2 w-full h-16 text-[13px] rounded-2xl border-4 border-[#e0e1dd] hover:border-black duration-25 text-black" onClick={close}>Close</button>
                         <Link className="w-full col-span-3 text-[13px]"  href={'https://ko-fi.com/nplaza'}><button className="bg-[#232c8f] w-full h-16 rounded-2xl border-4 col-span-2 border-[#232c8f] hover:border-black duration-25" onClick={dontshow}>Support me!</button></Link>
                     </div>
                 </div>
