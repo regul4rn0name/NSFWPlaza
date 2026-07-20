@@ -13,11 +13,11 @@ interface ModerationItem {
   date?: string;
 }
 
-export default function ModerationPage(){
+export default function ModerationPage() {
   const [pendingItems, setPendingItems] = useState<ModerationItem[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-  const [password, setPassword] = useState<string>(() => sessionStorage.getItem('mod_password') || '');
+  const [password, setPassword] = useState<string>('');
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const fetchQueue = async (authPass: string): Promise<void> => {
@@ -36,7 +36,9 @@ export default function ModerationPage(){
       const data: ModerationItem[] = await res.json();
       setPendingItems(data);
       setIsAuthenticated(true);
-      sessionStorage.setItem('mod_password', authPass);
+      if (typeof window !== 'undefined') {
+        sessionStorage.setItem('mod_password', authPass);
+      }
     } catch (err) {
       const message = err instanceof Error ? err.message : "An unknown error occurred";
       setError(message);
@@ -46,9 +48,14 @@ export default function ModerationPage(){
     }
   };
 
+  // Safely check sessionStorage after mounting on the client
   useEffect(() => {
-    if (password) {
-      fetchQueue(password);
+    if (typeof window !== 'undefined') {
+      const savedPassword = sessionStorage.getItem('mod_password');
+      if (savedPassword) {
+        setPassword(savedPassword);
+        fetchQueue(savedPassword);
+      }
     }
   }, []);
 
@@ -97,7 +104,6 @@ export default function ModerationPage(){
     e.currentTarget.src = 'https://via.placeholder.com/300x200?text=No+Preview';
   };
 
-  // Render Password Modal if not authenticated
   if (!isAuthenticated) {
     return (
       <div style={{ padding: '40px', maxWidth: '400px', margin: '100px auto', backgroundColor: '#1a1a1a', borderRadius: '8px', color: '#fff' }}>
@@ -128,7 +134,9 @@ export default function ModerationPage(){
         <h1>Moderation Queue ({pendingItems.length})</h1>
         <button
           onClick={() => {
-            sessionStorage.removeItem('mod_password');
+            if (typeof window !== 'undefined') {
+              sessionStorage.removeItem('mod_password');
+            }
             setIsAuthenticated(false);
             setPassword('');
           }}
