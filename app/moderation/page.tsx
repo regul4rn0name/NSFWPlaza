@@ -1,3 +1,5 @@
+'use client'
+
 import React, { useEffect, useState, FormEvent, SyntheticEvent } from 'react';
 
 const API_BASE = "https://nsfwplaza.jajca.site/api";
